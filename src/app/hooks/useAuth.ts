@@ -22,7 +22,7 @@ export const useAuth = () => {
       setIsAuthenticated(true);
       setUser(user);
     } catch (error) {
-      console.error("User not authenticated", error);
+      console.error("Invalid session", error);
       setIsAuthenticated(false);
       setUser(null);
     }
