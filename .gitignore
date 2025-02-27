@@ -45,3 +45,6 @@ next-env.d.ts
 
 # AWS Cognito Configuration file
 amplify_outputs.json
+
+# Amplify artifacts
+.amplify/
