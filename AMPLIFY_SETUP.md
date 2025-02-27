@@ -31,7 +31,35 @@ import "@aws-amplify/ui-react/styles.css";
 
 ## Local Development Setup
 
-### 1. AWS Credentials Setup
+Why You Need to Allow Access to cdk-bootstrap:
+
+### 1. Create an IAM user
+
+1. **Create an IAM user**
+
+   To create:
+
+   1. Log into AWS Console
+   2. Go to IAM → Users → Create user
+   3. Add a username
+   4. Click on Attach Policies directly
+   5. Attach `AdministratorAccess-Amplify` policy
+   6. Click on `Create user`
+
+2. **Create a new policy**
+
+   To create:
+
+   1. Go to IAM → Policies -> Create policy. (Specify a Policy name. eg. AWSSystemsManager)
+   2. Click on JSON
+   3. Add this
+      `{ "Version": "2012-10-17", "Statement": [ { "Effect": "Allow", "Action": [ "ssm:GetParameter", "ssm:GetParameters", "ssm:GetParametersByPath" ], "Resource": [ "arn:aws:ssm:ap-southeast-2:920372990381:parameter/PATH", "arn:aws:ssm:ap-southeast-2:920372990381:parameter/cdk-bootstrap/*" ] } ] }`
+   4. Attach this poilicy to the create user
+   5. Fetch the `ACCESS_KEY` and `SECRET_KEY` to be used in the next step.
+
+## Note: If you’re using npx ampx sandbox (or any Amplify process that might trigger CDK deployment), Amplify might need to read some of the bootstrap information stored in SSM Parameter Store (under the path cdk-bootstrap/\*). This is why you need to give it permission to access that specific path. Amplify may use `AWS CDK` behind the scenes to deploy or manage certain infrastructure components. During this Amplify might need certain parameters from the `SSM` store, henceforth it is added.
+
+### 2. AWS Credentials Setup
 
 1. **Create AWS Credentials File**
 
@@ -58,7 +86,7 @@ import "@aws-amplify/ui-react/styles.css";
    3. Create Access Key
    4. Save the credentials securely
 
-### 2. Initialize Amplify Backend Files
+### 3. Initialize Amplify Backend Files
 
 1. **Create Project Directory Structure**
 
@@ -91,7 +119,7 @@ import "@aws-amplify/ui-react/styles.css";
    });
    ```
 
-### 3. Create Sandbox Environment
+### 4. Create Sandbox Environment
 
 1. **Start Sandbox Environment**
 
@@ -114,7 +142,7 @@ import "@aws-amplify/ui-react/styles.css";
      - Identity Pool ID
      - AWS Region
 
-### 4. Configure Client Application
+### 5. Configure Client Application
 
 1. **Add Client-Side Configuration** (`src/app/components/ConfigureAmplifyClientSide.tsx`):
 
