@@ -191,3 +191,10 @@ import "@aws-amplify/ui-react/styles.css";
    - Test authentication flows in sandbox before deployment
    - Use different email addresses for testing
    - Verify error handling and edge cases
+
+## Refer these links
+
+- https://docs.amplify.aws/vue/build-a-backend/server-side-rendering/#configure-amplify-in-nextjs
+- https://docs.amplify.aws/vue/build-a-backend/troubleshooting/library-not-configured/
+
+## Note: Do not use ChatGPT for this repeatedly, gave wrong answers a lot of the times
