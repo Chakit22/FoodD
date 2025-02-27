@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String
+  createdAt DateTime @default(now())
+  orders    Order[]  @relation("UserOrders") // This is the reverse relation field
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  userId    String
+  foodItem  String
+  price     Float
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
+  user      User     @relation("UserOrders", fields: [userId], references: [id]) // Reverse relation on the Order model
+}
