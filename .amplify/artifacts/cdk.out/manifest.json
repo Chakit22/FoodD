@@ -1,0 +1,294 @@
+{
+  "version": "39.0.0",
+  "artifacts": {
+    "amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "amplify:deployment-type": "sandbox",
+          "created-by": "amplify"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/b41dc053d0d365e2f806b03b97213be70e3c16d6cfa2d372ec4bef95aaf948f1.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e.assets"
+      ],
+      "metadata": {
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "amplify:deployment-type",
+                "Value": "sandbox"
+              },
+              {
+                "Key": "created-by",
+                "Value": "amplify"
+              }
+            ]
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/deploymentType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deploymentType"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/region": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "region"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyAuth/UserPool/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPool4BA7F805"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyAuth/UserPoolAppClient/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthUserPoolAppClient2626C6F8"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyAuth/IdentityPool": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPool3FDE84CC"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyAuth/authenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthauthenticatedUserRoleD8DA3689"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyAuth/unauthenticatedUserRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthunauthenticatedUserRole2B524D9E"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyAuth/IdentityPoolRoleAttachment": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyAuthIdentityPoolRoleAttachment045F17C8"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyfooddeliveryappchakitrockssandbox95e398325eauthamplifyAuthUserPoolE1EB455ERef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyfooddeliveryappchakitrockssandbox95e398325eauthamplifyAuthUserPoolE1EB455ERef"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyfooddeliveryappchakitrockssandbox95e398325eauthamplifyAuthUserPoolAppClient6B4732F5Ref": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyfooddeliveryappchakitrockssandbox95e398325eauthamplifyAuthUserPoolAppClient6B4732F5Ref"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth/amplifyfooddeliveryappchakitrockssandbox95e398325eauthamplifyAuthIdentityPoolC01847FARef": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "amplifyfooddeliveryappchakitrockssandbox95e398325eauthamplifyAuthIdentityPoolC01847FARef"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/auth.NestedStack/auth.NestedStackResource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "auth179371D7"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/userPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "userPoolId"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/webClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "webClientId"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/identityPoolId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "identityPoolId"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/authRegion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "authRegion"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/allowUnauthenticatedIdentities": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "allowUnauthenticatedIdentities"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/signupAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "signupAttributes"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/usernameAttributes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "usernameAttributes"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/verificationMechanisms": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "verificationMechanisms"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/passwordPolicyMinLength": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyMinLength"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/passwordPolicyRequirements": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "passwordPolicyRequirements"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/mfaConfiguration": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaConfiguration"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/mfaTypes": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "mfaTypes"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/socialProviders": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "socialProviders"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/oauthCognitoDomain": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthCognitoDomain"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/oauthScope": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthScope"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/oauthRedirectSignIn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignIn"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/oauthRedirectSignOut": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthRedirectSignOut"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/oauthResponseType": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthResponseType"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/oauthClientId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "oauthClientId"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/groups": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "groups"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "amplify-fooddeliveryapp-chakitrocks-sandbox-95e398325e"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
