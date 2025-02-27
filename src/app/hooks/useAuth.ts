@@ -22,6 +22,7 @@ export const useAuth = () => {
       setIsAuthenticated(true);
       setUser(user);
     } catch (error) {
+      console.error("User not authenticated", error);
       setIsAuthenticated(false);
       setUser(null);
     }
