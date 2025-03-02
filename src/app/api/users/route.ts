@@ -5,7 +5,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 
 const prisma = new PrismaClient();
 
-// Route to get all the users
+// Route to get all the users (Admin)
 export async function GET() {
   try {
     const users = await prisma.user.findMany();

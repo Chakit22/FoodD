@@ -25,5 +25,5 @@ model Order {
   price     Float
   status    String   @default("Pending")
   createdAt DateTime @default(now())
-  user      User     @relation("UserOrders", fields: [userId], references: [id]) // Reverse relation on the Order model
+  user      User     @relation("UserOrders", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade) // Reverse relation on the Order model
 }
