@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     const users = await prisma.user.findMany();
-    return NextResponse.json(users);
+    return NextResponse.json({ data: users }, { status: 200 });
   } catch (error) {
     console.error("Error fetching users", error);
     return NextResponse.json(
@@ -43,9 +43,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ data: user }, { status: 201 });
   } catch (error) {
     console.error("Error creating user", error);
+
     if (error instanceof PrismaClientKnownRequestError) {
+      // Duplicate user
+      console.error("User already exists!", error);
       return NextResponse.json({ error: error.message }, { status: 409 });
     }
+
     return NextResponse.json(
       { error: "An unexpected error occured" },
       { status: 500 }
