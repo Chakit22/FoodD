@@ -10,9 +10,10 @@ datasource db {
 
 model User {
   id        String   @id @default(uuid())
-  name      String
+  firstName String
+  lastName  String
+  phone     Int
   email     String   @unique
-  password  String
   role      String
   createdAt DateTime @default(now())
   orders    Order[]  @relation("UserOrders") // This is the reverse relation field

@@ -1,8 +1,9 @@
 import { Order } from "./Order";
 
 export interface User {
-  name: string;
+  firstName: string;
+  lastName: string;
+  phone: Number;
   email: string;
-  password: string;
   role: string;
 }

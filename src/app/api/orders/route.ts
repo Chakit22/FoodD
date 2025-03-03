@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import { Order } from "@/types/Order";
+import { getCurrentUser } from "aws-amplify/auth";
 
 const prisma = new PrismaClient();
 
@@ -20,7 +21,7 @@ export async function POST(req: Request) {
     const order = await prisma.order.create({
       data: { userId, foodItem, price, status: "Ordered" },
     });
-    return NextResponse.json({data: order}, {status:201});
+    return NextResponse.json({ data: order }, { status: 201 });
   } catch (error) {
     console.error("Error creating order", error);
 
@@ -38,14 +39,19 @@ export async function POST(req: Request) {
 // API to get all the orders (of all the users) (For Admin)
 export async function GET() {
   try {
+    const { signInDetails } = await getCurrentUser();
+    console.log(signInDetails);
     const orders: Order[] = await prisma.order.findMany();
     console.log("orders : ");
     console.log(orders);
     return NextResponse.json({ data: orders }, { status: 200 });
   } catch (error) {
     console.error("Error fetching all orders", error);
-    if(error instanceof PrismaClientKnownRequestError) {
-      return NextResponse.json({error: "Error fetching orders"},{status:})
+    if (error instanceof PrismaClientKnownRequestError) {
+      return NextResponse.json(
+        { error: "Error fetching orders" },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(

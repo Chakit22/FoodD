@@ -19,6 +19,8 @@ export const useAuth = () => {
   async function checkUser() {
     try {
       const user = await getCurrentUser();
+      console.log("user :");
+      console.log(user);
       setIsAuthenticated(true);
       setUser(user);
     } catch (error) {

@@ -2,27 +2,35 @@
 
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
+import { useAuth } from "../hooks/useAuth";
+import React, { FormEvent } from "react";
+
+interface SignUpFormElements extends HTMLFormControlsCollection {
+  email: HTMLInputElement;
+  password: HTMLInputElement;
+}
+
+interface SignUpForm extends HTMLFormElement {
+  readonly elements: SignUpFormElements;
+}
 
 export function Auth() {
+  const { isAuthenticated, user, loading, signIn, signUp, signOut } = useAuth();
+
+  async function handleSubmit(event: FormEvent<SignUpForm>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    // ... validate inputs
+    await signIn(form.elements.email.value, form.elements.password.value);
+  }
+
   return (
-    <Authenticator
-      initialState="signUp" // Forces the initial view to be signup
-      components={{
-        Header() {
-          return (
-            <div className="text-center p-4">
-              <h1 className="text-2xl font-bold">Create Account</h1>
-            </div>
-          );
-        },
-      }}
-    >
-      {({ user }) => (
-        <div className="p-4 text-center">
-          <h2 className="text-xl">Successfully signed up!</h2>
-          <p>Welcome {user?.username}</p>
-        </div>
-      )}
-    </Authenticator>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="email">Email:</label>
+      <input type="text" id="email" name="email" />
+      <label htmlFor="password">Password:</label>
+      <input type="password" id="password" name="password" />
+      <input type="submit" />
+    </form>
   );
 }
