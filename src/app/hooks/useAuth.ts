@@ -4,6 +4,7 @@ import {
   signIn,
   signOut,
   signUp,
+  resetPassword,
 } from "aws-amplify/auth";
 import { useState, useEffect } from "react";
 
@@ -11,10 +12,6 @@ export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    checkUser();
-  }, []);
 
   async function checkUser() {
     try {
@@ -69,6 +66,15 @@ export const useAuth = () => {
       setUser(null);
     } catch (error) {
       console.error("Error signing out:", error);
+      throw error;
+    }
+  }
+
+  async function handleResetPassword() {
+    try {
+      // await res;
+    } catch (error) {
+      console.error("Error resetting password:", error);
       throw error;
     }
   }
