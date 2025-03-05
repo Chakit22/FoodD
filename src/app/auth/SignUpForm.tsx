@@ -11,7 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 export default function SignupForm() {
   const {
@@ -157,7 +157,8 @@ export default function SignupForm() {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="flex flex-col items-center justify-center">
+        <div className="text-sm">Already have an account ? </div>
         <Button onClick={onSubmit}>Submit</Button>
       </CardFooter>
     </Card>

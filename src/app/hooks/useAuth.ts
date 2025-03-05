@@ -5,6 +5,7 @@ import {
   signOut,
   signUp,
   resetPassword,
+  confirmResetPassword,
 } from "aws-amplify/auth";
 import { useState, useEffect } from "react";
 
@@ -70,9 +71,44 @@ export const useAuth = () => {
     }
   }
 
-  async function handleResetPassword() {
+  // Sends the code to the user's email
+  async function handleForgotPassword(email: string) {
     try {
-      // await res;
+      const output = await resetPassword({
+        username: email,
+      });
+
+      const { nextStep } = output;
+      switch (nextStep.resetPasswordStep) {
+        case "CONFIRM_RESET_PASSWORD_WITH_CODE":
+          const codeDeliveryDetails = nextStep.codeDeliveryDetails;
+          console.log(
+            `Confirmation code was sent to ${codeDeliveryDetails.deliveryMedium}`
+          );
+          // Collect the confirmation code from the user and pass to confirmResetPassword.
+          break;
+        case "DONE":
+          console.log("Successfully reset password.");
+          break;
+      }
+    } catch (error) {
+      console.error("Error Resetting password!", error);
+      throw error;
+    }
+  }
+
+  // Verifies the code and resets the password
+  async function handleConfirmResetPassword(
+    email: string,
+    code: string,
+    newPassword: string
+  ) {
+    try {
+      await confirmResetPassword({
+        username: email,
+        confirmationCode: code,
+        newPassword: newPassword,
+      });
     } catch (error) {
       console.error("Error resetting password:", error);
       throw error;
@@ -86,5 +122,7 @@ export const useAuth = () => {
     signIn: handleSignIn,
     signUp: handleSignUp,
     signOut: handleSignOut,
+    forgotPassword: handleForgotPassword,
+    confirmResetPassword: handleConfirmResetPassword,
   };
 };

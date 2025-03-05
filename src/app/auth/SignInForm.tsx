@@ -77,7 +77,10 @@ export default function SignInForm() {
 
         {/* Forgot Password */}
         <div className="flex justify-end">
-          <Link href={"#"}>Forgot password</Link>
+          <Link href={{
+            pathname: "/auth/reset-password",
+            query: {email: }
+          }}>Forgot password</Link>
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">

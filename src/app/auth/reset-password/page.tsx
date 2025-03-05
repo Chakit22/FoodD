@@ -10,8 +10,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-export default function ResetPassword() {
+interface resetPasswordProps {
+  email: string;
+}
+
+export default function ResetPassword({ email }: resetPasswordProps) {
   //    use form
   const {
     register,
@@ -19,15 +24,20 @@ export default function ResetPassword() {
     formState: { errors },
   } = useForm();
 
-  //   const { signIn } = useAuth();
+  const { forgotPassword, confirmResetPassword } = useAuth();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log("form Data:", data);
 
     try {
-      //   await signIn(data.email, data.password);
+      // Send the email for the OTP
+      await forgotPassword(email);
+
+      // Confirm the password
+      await confirmResetPassword(email, data.code, data.new_password);
     } catch (error) {
       console.error("Error : ", error);
+      toast.error("Error during resetting password!");
     }
   });
 
