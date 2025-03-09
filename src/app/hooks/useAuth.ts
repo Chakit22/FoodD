@@ -1,3 +1,4 @@
+"use client";
 import {
   AuthUser,
   getCurrentUser,
@@ -6,8 +7,10 @@ import {
   signUp,
   resetPassword,
   confirmResetPassword,
+  confirmSignUp,
+  resendSignUpCode,
 } from "aws-amplify/auth";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -29,22 +32,10 @@ export const useAuth = () => {
     setLoading(false);
   }
 
-  async function handleSignIn(email: string, password: string) {
-    try {
-      const { isSignedIn } = await signIn({ username: email, password });
-      if (isSignedIn) {
-        await checkUser();
-      }
-      return isSignedIn;
-    } catch (error) {
-      console.error("Error signing in:", error);
-      throw error;
-    }
-  }
-
   async function handleSignUp(email: string, password: string) {
     try {
-      const { isSignUpComplete } = await signUp({
+      // Sends the confirmation code
+      await signUp({
         username: email,
         password,
         options: {
@@ -53,20 +44,43 @@ export const useAuth = () => {
           },
         },
       });
-      return isSignUpComplete;
     } catch (error) {
       console.error("Error signing up:", error);
       throw error;
     }
   }
 
-  async function handleSignOut() {
+  async function handleConfirmSignup(email: string, code: string) {
     try {
-      await signOut();
-      setIsAuthenticated(false);
-      setUser(null);
+      console.log("email:");
+      console.log(email);
+      await confirmSignUp({
+        username: email,
+        confirmationCode: code,
+      });
     } catch (error) {
-      console.error("Error signing out:", error);
+      console.error("Error Confirming signup:", error);
+      throw error;
+    }
+  }
+
+  async function handleResendSignUpCode(email: string) {
+    try {
+      await resendSignUpCode({
+        username: email,
+      });
+    } catch (error) {
+      console.error("Error resending sign up code:", error);
+      throw error;
+    }
+  }
+
+  async function handleSignIn(email: string, password: string) {
+    try {
+      const { isSignedIn } = await signIn({ username: email, password });
+      return isSignedIn;
+    } catch (error) {
+      console.error("Error signing in:", error);
       throw error;
     }
   }
@@ -115,6 +129,17 @@ export const useAuth = () => {
     }
   }
 
+  async function handleSignOut() {
+    try {
+      await signOut();
+      setIsAuthenticated(false);
+      setUser(null);
+    } catch (error) {
+      console.error("Error signing out:", error);
+      throw error;
+    }
+  }
+
   return {
     isAuthenticated,
     user,
@@ -124,5 +149,7 @@ export const useAuth = () => {
     signOut: handleSignOut,
     forgotPassword: handleForgotPassword,
     confirmResetPassword: handleConfirmResetPassword,
+    confirmSignUp: handleConfirmSignup,
+    resendSignUpCode: handleResendSignUpCode,
   };
 };

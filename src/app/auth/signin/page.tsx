@@ -1,3 +1,5 @@
+"use client";
+import { useUser } from "@/app/components/User-Provider";
 import { useAuth } from "@/app/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,24 +13,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function SignInForm() {
-  //    use form
   const {
     register,
     handleSubmit,
     formState: { errors },
+    resetField,
+    watch,
   } = useForm();
 
+  const emailEntered: string = watch("email");
+
   const { signIn } = useAuth();
+
+  const { setEmail } = useUser();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log("form Data:", data);
 
     try {
       await signIn(data.email, data.password);
+
+      // Set the email property in the provider
+      setEmail(data.email);
+
+      // Navigate to the main page
+      toast("User sucesfully signed In");
     } catch (error) {
       console.error("Error : ", error);
+      toast.error("Incorrect Username or password!");
+      resetField("password");
     }
   });
 
@@ -54,22 +70,13 @@ export default function SignInForm() {
 
         {/* Password */}
         <div>
-          <Label htmlFor="password">Email</Label>
+          <Label htmlFor="password">Password</Label>
           <Input
             id="password"
             type="password"
             placeholder="Password"
             {...register("password", {
               required: "Password is required",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-              },
-              pattern: {
-                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-                message:
-                  "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-              },
             })}
           />
           {errors.password && <p>{errors.password.message as string}</p>}
@@ -77,13 +84,25 @@ export default function SignInForm() {
 
         {/* Forgot Password */}
         <div className="flex justify-end">
-          <Link href={{
-            pathname: "/auth/reset-password",
-            query: {email: }
-          }}>Forgot password</Link>
+          <Link
+            href={`/auth/reset-password?email=${encodeURIComponent(
+              emailEntered
+            )}`}
+            className="text-blue-400"
+          >
+            Forgot password
+          </Link>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="flex flex-col items-center justify-center">
+        <div className="text-sm">
+          New User ?{" "}
+          <span>
+            <Link href={"/auth/signup"} replace={true}>
+              Sign Up
+            </Link>
+          </span>
+        </div>
         <Button onClick={onSubmit}>Submit</Button>
       </CardFooter>
     </Card>

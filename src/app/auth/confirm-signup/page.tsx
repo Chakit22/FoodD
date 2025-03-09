@@ -1,3 +1,6 @@
+"use client";
+
+import { useUser } from "@/app/components/User-Provider";
 import { useAuth } from "@/app/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +12,14 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function ConfirmSignUp() {
+  const router = useRouter();
+  const params = useSearchParams();
+  const email = params.get("email");
   //    use form
   const {
     register,
@@ -19,17 +27,37 @@ export default function ConfirmSignUp() {
     formState: { errors },
   } = useForm();
 
-  //   const { signIn } = useAuth();
+  const { confirmSignUp, resendSignUpCode } = useAuth();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log("form Data:", data);
 
+    // console.log("email");
+    // console.log(email);
+
     try {
-      //   await signIn(data.email, data.password);
+      await confirmSignUp(email!, data.code);
+
+      toast("User sucesfully signed Up!");
+
+      // Navigate to signIn page
+      router.replace("/auth/signin");
     } catch (error) {
       console.error("Error : ", error);
+      toast.error("Error signing up. Please try again later!");
     }
   });
+
+  const handleResendConfirmationCode = async () => {
+    try {
+      await resendSignUpCode(email!);
+
+      toast("Check your email for confirmation Code!");
+    } catch (error) {
+      console.error("error", error);
+      toast.error("Error signing up. Please Check your code and try again!");
+    }
+  };
 
   return (
     <Card className="flex flex-col gap-4">
@@ -51,7 +79,13 @@ export default function ConfirmSignUp() {
           {errors.code && <p>{errors.code.message as string}</p>}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="flex flex-col items-center justify-center gap-2">
+        <div
+          className="text-sm text-blue-300 hover:cursor"
+          onClick={handleResendConfirmationCode}
+        >
+          Resend Code
+        </div>
         <Button onClick={onSubmit}>Submit</Button>
       </CardFooter>
     </Card>

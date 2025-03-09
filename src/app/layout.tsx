@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ConfigureAmplifyClientSide from './components/ConfigureAmplifyClientSide';
 import {Toaster} from "sonner";
+import { UserProvider } from "./components/User-Provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,9 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ConfigureAmplifyClientSide />
-        <Toaster position="top-right" />
-        {children}
+        <UserProvider>
+          <ConfigureAmplifyClientSide />
+          <Toaster position="top-right" />
+          {children}
+        </UserProvider>
       </body>
     </html>
   );

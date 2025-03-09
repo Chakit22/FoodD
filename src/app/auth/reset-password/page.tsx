@@ -1,3 +1,5 @@
+"use client";
+
 import { useAuth } from "@/app/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,18 +13,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useUser } from "../../components/User-Provider";
+import { useSearchParams } from "next/navigation";
 
-interface resetPasswordProps {
-  email: string;
-}
-
-export default function ResetPassword({ email }: resetPasswordProps) {
+export default function ResetPassword() {
   //    use form
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const params = useSearchParams();
+
+  const email = params.get("email");
 
   const { forgotPassword, confirmResetPassword } = useAuth();
 
@@ -31,10 +35,10 @@ export default function ResetPassword({ email }: resetPasswordProps) {
 
     try {
       // Send the email for the OTP
-      await forgotPassword(email);
+      await forgotPassword(email!);
 
       // Confirm the password
-      await confirmResetPassword(email, data.code, data.new_password);
+      await confirmResetPassword(email!, data.code, data.new_password);
     } catch (error) {
       console.error("Error : ", error);
       toast.error("Error during resetting password!");

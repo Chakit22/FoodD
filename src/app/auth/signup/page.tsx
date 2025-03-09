@@ -11,9 +11,14 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
+import { useUser } from "../../components/User-Provider";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function SignupForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -28,8 +33,15 @@ export default function SignupForm() {
     try {
       // SignUp
       await signUp(data.email, data.password);
+
+      // Sent confirmation code on email
+      toast("Check your email for confirmation Code!");
+
+      // Navigate to the new page using router
+      router.replace(`/auth/confirm-signup?email=${data.email}`);
     } catch (error) {
       console.error("error", error);
+      toast.error("Error signing up. Please try again later!");
     }
   });
 
@@ -157,8 +169,15 @@ export default function SignupForm() {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex flex-col items-center justify-center">
-        <div className="text-sm">Already have an account ? </div>
+      <CardFooter className="flex flex-col items-center justify-center gap-2">
+        <div className="text-sm">
+          Already have an account ?{" "}
+          <span>
+            <Link href={"/auth/signin"} replace={true}>
+              Sign In
+            </Link>
+          </span>
+        </div>
         <Button onClick={onSubmit}>Submit</Button>
       </CardFooter>
     </Card>
