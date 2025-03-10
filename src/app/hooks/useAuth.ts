@@ -1,6 +1,5 @@
 "use client";
 import {
-  AuthUser,
   signIn,
   signOut,
   signUp,
@@ -8,28 +7,21 @@ import {
   confirmResetPassword,
   confirmSignUp,
   resendSignUpCode,
+  getCurrentUser,
 } from "aws-amplify/auth";
-import { useState } from "react";
 
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<AuthUser | null>(null);
-  // const [loading, setLoading] = useState<boolean>(true);
-
-  // async function checkUser() {
-  //   try {
-  //     const user = await getCurrentUser();
-  //     console.log("user :");
-  //     console.log(user);
-  //     setIsAuthenticated(true);
-  //     setUser(user);
-  //   } catch (error) {
-  //     console.error("Invalid session", error);
-  //     setIsAuthenticated(false);
-  //     setUser(null);
-  //   }
-  //   setLoading(false);
-  // }
+  async function checkUser() {
+    try {
+      const user = await getCurrentUser();
+      console.log("user :");
+      console.log(user);
+      return true;
+    } catch (error) {
+      console.error("Invalid session", error);
+      return false;
+    }
+  }
 
   async function handleSignUp(email: string, password: string) {
     try {
@@ -117,8 +109,6 @@ export const useAuth = () => {
   async function handleSignOut() {
     try {
       await signOut();
-      setIsAuthenticated(false);
-      setUser(null);
     } catch (error) {
       console.error("Error signing out:", error);
       throw error;
@@ -126,8 +116,7 @@ export const useAuth = () => {
   }
 
   return {
-    isAuthenticated,
-    user,
+    checkUser,
     signIn: handleSignIn,
     signUp: handleSignUp,
     signOut: handleSignOut,
