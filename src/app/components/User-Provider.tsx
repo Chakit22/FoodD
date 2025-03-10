@@ -1,22 +1,23 @@
 "use client";
 
+import { User } from "@/types/User";
 import { createContext, useContext, useState } from "react";
 
 interface ContextProps {
-  email: string;
-  setEmail: (email: string) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 const UserContext = createContext<ContextProps>({
-  email: "",
-  setEmail: (email: string) => {},
+  user: {} as User,
+  setUser: () => {},
 });
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [email, setEmail] = useState<string>("");
+  const [user, setUser] = useState<User | null>(null);
 
   return (
-    <UserContext.Provider value={{ email, setEmail }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

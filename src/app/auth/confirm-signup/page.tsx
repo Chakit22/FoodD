@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/app/components/User-Provider";
 import { useAuth } from "@/app/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,9 +37,6 @@ export default function ConfirmSignUp() {
   const onSubmit = handleSubmit(async (data) => {
     console.log("form Data:", data);
 
-    // console.log("email");
-    // console.log(email);
-
     try {
       await confirmSignUp(email!, data.code);
 
@@ -77,6 +73,8 @@ export default function ConfirmSignUp() {
       setTimer(60);
     } else if (!isResendButtonVisible) {
       const timer_ = setTimeout(() => setTimer((prev) => prev - 1), 1000);
+
+      clearTimeout(timer_);
     }
   }, [timer, isResendButtonVisible]);
 

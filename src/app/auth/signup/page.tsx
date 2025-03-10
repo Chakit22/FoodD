@@ -17,6 +17,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useUser } from "@/app/components/User-Provider";
+import axios from "axios";
 
 export default function SignupForm() {
   const router = useRouter();
@@ -29,6 +31,8 @@ export default function SignupForm() {
 
   const { signUp } = useAuth();
 
+  const { setUser } = useUser();
+
   const onSubmit = handleSubmit(async (data) => {
     console.log("Form data : ", data);
 
@@ -39,10 +43,32 @@ export default function SignupForm() {
       // Sent confirmation code on email
       toast("Check your email for confirmation Code!");
 
+      // Set the user
+      setUser({
+        firstName: data.first_name,
+        lastName: data.last_name,
+        phone: data.phone,
+        email: data.email,
+        role: "user",
+      });
+
+      // Add the user into the user's database
+      await axios.post("/api/users", {
+        firstName: data.first_name,
+        lastName: data.last_name,
+        phone: data.phone,
+        email: data.email,
+        role: "user",
+      });
+
       // Navigate to the new page using router
       router.replace(`/auth/confirm-signup?email=${data.email}`);
     } catch (error) {
       console.error("error", error);
+
+      // No current user
+      setUser(null);
+
       toast.error("Error signing up. Please try again later!");
     }
   });

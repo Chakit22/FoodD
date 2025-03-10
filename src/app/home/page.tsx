@@ -2,13 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { useAuth } from "../hooks/useAuth";
-import { useUser } from "../components/User-Provider";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { signOut } = useAuth();
-  const { email } = useUser();
   const router = useRouter();
   const handleSignOut = async () => {
     try {

@@ -1,7 +1,6 @@
 "use client";
 import {
   AuthUser,
-  getCurrentUser,
   signIn,
   signOut,
   signUp,
@@ -15,22 +14,22 @@ import { useState } from "react";
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
-  async function checkUser() {
-    try {
-      const user = await getCurrentUser();
-      console.log("user :");
-      console.log(user);
-      setIsAuthenticated(true);
-      setUser(user);
-    } catch (error) {
-      console.error("Invalid session", error);
-      setIsAuthenticated(false);
-      setUser(null);
-    }
-    setLoading(false);
-  }
+  // async function checkUser() {
+  //   try {
+  //     const user = await getCurrentUser();
+  //     console.log("user :");
+  //     console.log(user);
+  //     setIsAuthenticated(true);
+  //     setUser(user);
+  //   } catch (error) {
+  //     console.error("Invalid session", error);
+  //     setIsAuthenticated(false);
+  //     setUser(null);
+  //   }
+  //   setLoading(false);
+  // }
 
   async function handleSignUp(email: string, password: string) {
     try {
@@ -129,7 +128,6 @@ export const useAuth = () => {
   return {
     isAuthenticated,
     user,
-    loading,
     signIn: handleSignIn,
     signUp: handleSignUp,
     signOut: handleSignOut,

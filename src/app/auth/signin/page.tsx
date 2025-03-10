@@ -1,5 +1,4 @@
 "use client";
-import { useUser } from "@/app/components/User-Provider";
 import { useAuth } from "@/app/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,8 +29,6 @@ export default function SignInForm() {
 
   const { signIn } = useAuth();
 
-  const { setEmail } = useUser();
-
   const onSubmit = handleSubmit(async (data) => {
     console.log("form Data:", data);
 
@@ -39,7 +36,7 @@ export default function SignInForm() {
       await signIn(data.email, data.password);
 
       // Set the email property in the provider
-      setEmail(data.email);
+      // setEmail(data.email);
 
       toast("User sucesfully signed In");
 

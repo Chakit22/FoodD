@@ -22,9 +22,9 @@ export async function GET() {
 // Route to create a new user
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, password, role } = await req.json();
+    const { firstName, lastName, email, phone, role } = await req.json();
 
-    if (!name || !email || !password || !role) {
+    if (!firstName || !lastName || !email || !phone || !role) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -33,9 +33,10 @@ export async function POST(req: NextRequest) {
 
     const user: User = await prisma.user.create({
       data: {
-        name,
+        firstName,
+        lastName,
+        phone,
         email,
-        password,
         role,
       },
     });

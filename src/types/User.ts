@@ -1,9 +1,9 @@
-import { Order } from "./Order";
+// import { Order } from "./Order";
 
 export interface User {
   firstName: string;
   lastName: string;
-  phone: Number;
+  phone: number;
   email: string;
   role: string;
 }
