@@ -8,14 +8,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "../../hooks/useAuth";
-import { useUser } from "../../components/User-Provider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useState } from "react";
 
 export default function SignupForm() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function SignupForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const { signUp } = useAuth();
 
@@ -117,23 +119,28 @@ export default function SignupForm() {
             <Label htmlFor="password" className="text-bold">
               Password
             </Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Password"
-              {...register("password", {
-                required: "Password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-                pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-                  message:
-                    "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
-                },
-              })}
-            />
+            <div className="flex justify-between gap-2 items-center">
+              <Input
+                id="password"
+                type={isPasswordVisible ? "password" : "text"}
+                placeholder="Password"
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters",
+                  },
+                  pattern: {
+                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+                    message:
+                      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+                  },
+                })}
+              />
+              <div onClick={() => setIsPasswordVisible(!isPasswordVisible)}>
+                {isPasswordVisible ? <FaEye /> : <FaEyeSlash />}
+              </div>
+            </div>
             {errors.password && (
               <p className="text-red-400">
                 {errors.password.message as string}

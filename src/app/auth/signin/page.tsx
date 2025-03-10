@@ -12,10 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function SignInForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -39,8 +41,10 @@ export default function SignInForm() {
       // Set the email property in the provider
       setEmail(data.email);
 
-      // Navigate to the main page
       toast("User sucesfully signed In");
+
+      // Navigate to the main page
+      router.replace("/home");
     } catch (error) {
       console.error("Error : ", error);
       toast.error("Incorrect Username or password!");
@@ -85,10 +89,9 @@ export default function SignInForm() {
         {/* Forgot Password */}
         <div className="flex justify-end">
           <Link
-            href={`/auth/reset-password?email=${encodeURIComponent(
-              emailEntered
-            )}`}
+            href={`/auth/reset-password?email=${emailEntered}`}
             className="text-blue-400"
+            replace={true}
           >
             Forgot password
           </Link>

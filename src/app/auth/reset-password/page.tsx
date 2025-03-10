@@ -13,8 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { useUser } from "../../components/User-Provider";
 import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ResetPassword() {
   //    use form
@@ -24,9 +25,13 @@ export default function ResetPassword() {
     formState: { errors },
   } = useForm();
 
+  const router = useRouter();
+
   const params = useSearchParams();
 
   const email = params.get("email");
+  console.log("email : ");
+  console.log(email);
 
   const { forgotPassword, confirmResetPassword } = useAuth();
 
@@ -34,16 +39,34 @@ export default function ResetPassword() {
     console.log("form Data:", data);
 
     try {
+      // Confirm the password
+      await confirmResetPassword(email!, data.code, data.new_password);
+
+      toast.success("Password resetted sucesfully!");
+
+      // Got to signIn
+      router.replace("/auth/signin");
+    } catch (error) {
+      console.error("Error : ", error);
+      toast.error("Error during resetting password. Please try again later!");
+    }
+  });
+
+  const sendPassword = async () => {
+    try {
       // Send the email for the OTP
       await forgotPassword(email!);
 
-      // Confirm the password
-      await confirmResetPassword(email!, data.code, data.new_password);
+      toast("Check your email for the Code!");
     } catch (error) {
       console.error("Error : ", error);
       toast.error("Error during resetting password!");
     }
-  });
+  };
+
+  useEffect(() => {
+    sendPassword();
+  }, []);
 
   return (
     <Card className="flex flex-col gap-4">

@@ -88,23 +88,9 @@ export const useAuth = () => {
   // Sends the code to the user's email
   async function handleForgotPassword(email: string) {
     try {
-      const output = await resetPassword({
+      await resetPassword({
         username: email,
       });
-
-      const { nextStep } = output;
-      switch (nextStep.resetPasswordStep) {
-        case "CONFIRM_RESET_PASSWORD_WITH_CODE":
-          const codeDeliveryDetails = nextStep.codeDeliveryDetails;
-          console.log(
-            `Confirmation code was sent to ${codeDeliveryDetails.deliveryMedium}`
-          );
-          // Collect the confirmation code from the user and pass to confirmResetPassword.
-          break;
-        case "DONE":
-          console.log("Successfully reset password.");
-          break;
-      }
     } catch (error) {
       console.error("Error Resetting password!", error);
       throw error;
