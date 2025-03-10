@@ -1,0 +1,30 @@
+// default means database will automatically create that field. No need to define that in the Interface
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  phone     Int
+  email     String   @unique
+  role      String
+  createdAt DateTime @default(now())
+  orders    Order[]  @relation("UserOrders") // This is the reverse relation field
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  userId    String
+  foodItem  String
+  price     Float
+  status    String   @default("Pending")
+  createdAt DateTime @default(now())
+  user      User     @relation("UserOrders", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade) // Reverse relation on the Order model
+}
