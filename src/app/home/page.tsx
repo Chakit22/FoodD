@@ -23,7 +23,7 @@ export default function Home() {
 
   const isLoggedIn = async () => {
     try {
-      const user = await checkUser();
+      await checkUser();
       return true;
     } catch (error) {
       console.error("Error", error);

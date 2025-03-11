@@ -15,7 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import axios from "axios";
+// import axios from "axios";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function SignInForm() {
 
   const emailEntered: string = watch("email");
 
-  const { signIn, checkUser } = useAuth();
+  const { signIn } = useAuth();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log("form Data:", data);
