@@ -1,28 +1,56 @@
+import { fetchAuthSession } from "aws-amplify/auth/server";
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "aws-amplify/auth";
-// This function can be marked `async` if using `await` inside
+import { runWithAmplifyServerContext } from "@/utils/amplifyServerUtils";
+
 export async function middleware(request: NextRequest) {
-  console.log("Inside middleware");
-  const user = await getCurrentUser();
-  console.log("user : ");
-  console.log(user);
-  if (
-    request.method === "GET" ||
-    request.method === "DELETE" ||
-    request.method === "PATCH"
-  ) {
-    if (user?.role === "admin") {
-      return NextResponse.next();
+  const response = NextResponse.next();
+
+  const authenticated = await runWithAmplifyServerContext({
+    nextServerContext: { request, response },
+    operation: async (contextSpec) => {
+      try {
+        const session = await fetchAuthSession(contextSpec);
+        return (
+          session.tokens?.accessToken !== undefined &&
+          session.tokens?.idToken !== undefined
+        );
+      } catch (error) {
+        console.log(error);
+        return false;
+      }
+    },
+  });
+
+  console.log(authenticated);
+
+  if (!authenticated) {
+    return NextResponse.redirect(
+      new URL("/auth/signin", request.nextUrl.origin)
+    );
+  }
+
+  // User is authenticated
+  if (request.method !== "POST") {
+    // Check if the user role is admin if not then do not allow
+    if (request.headers.get("user-role") == "admin") {
+      return response;
     } else {
       return NextResponse.json(
-        { success: false, message: "Unauthorized User" },
-        { status: 401 }
+        {
+          error: "Access forbidden",
+        },
+        {
+          status: 403,
+        }
       );
     }
   }
+
+  console.log("hey");
+
+  return response;
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: ["/api/users", "/api/users/:id"],
 };

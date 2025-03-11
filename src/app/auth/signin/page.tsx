@@ -1,4 +1,5 @@
 "use client";
+
 import { useAuth } from "@/app/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import axios from "axios";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -27,7 +29,7 @@ export default function SignInForm() {
 
   const emailEntered: string = watch("email");
 
-  const { signIn } = useAuth();
+  const { signIn, checkUser } = useAuth();
 
   const onSubmit = handleSubmit(async (data) => {
     console.log("form Data:", data);
@@ -39,6 +41,14 @@ export default function SignInForm() {
       // setEmail(data.email);
 
       toast("User sucesfully signed In");
+
+      // await checkUser();
+
+      // await axios.get("/api/users", {
+      //   headers: {
+      //     "user-role": "admin",
+      //   },
+      // });
 
       // Navigate to the main page
       router.replace("/home");

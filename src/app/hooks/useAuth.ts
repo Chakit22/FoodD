@@ -19,7 +19,7 @@ export const useAuth = () => {
       return true;
     } catch (error) {
       console.error("Invalid session", error);
-      return false;
+      throw error;
     }
   }
 
@@ -69,6 +69,7 @@ export const useAuth = () => {
   async function handleSignIn(email: string, password: string) {
     try {
       const { isSignedIn } = await signIn({ username: email, password });
+      // await checkUser();
       return isSignedIn;
     } catch (error) {
       console.error("Error signing in:", error);
