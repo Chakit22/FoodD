@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ConfigureAmplifyClientSide from './components/ConfigureAmplifyClientSide';
+import ConfigureAmplifyClientSide from '@/components/ConfigureAmplifyClientSide';
 import {Toaster} from "sonner";
-import { UserProvider } from "./components/User-Provider";
+import { UserProvider } from "../components/User-Provider";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar"
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +34,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <UserProvider>
-          <ConfigureAmplifyClientSide />
-          <Toaster position="top-right" />
-          {children}
+          <SidebarProvider>
+            <ConfigureAmplifyClientSide />
+            <Toaster position="top-right" />
+            <AppSidebar />
+              {children}
+          </SidebarProvider>
         </UserProvider>
       </body>
     </html>

@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState } from "react";
-import { useUser } from "@/app/components/User-Provider";
+import { useUser } from "@/components/User-Provider";
 import axios from "axios";
 
 export default function SignupForm() {

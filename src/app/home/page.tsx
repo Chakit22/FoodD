@@ -1,14 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useAuth } from "../hooks/useAuth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   const { signOut, checkUser } = useAuth();
   const router = useRouter();
+
   const handleSignOut = async () => {
     try {
       await signOut();
@@ -27,6 +28,7 @@ export default function Home() {
       return true;
     } catch (error) {
       console.error("Error", error);
+      toast.error("Session Expired. Please login again!");
       // Redorect to signIn page
       router.replace("/auth/signup");
       return false;
@@ -38,8 +40,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex gap-2 justify-between">
-      <Button onClick={handleSignOut}>Sign Out</Button>
+    <div className="w-full">
+      <Navbar handleSignOut={handleSignOut} />
     </div>
   );
 }
