@@ -12,7 +12,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
