@@ -5,8 +5,6 @@ import ConfigureAmplifyClientSide from '@/components/ConfigureAmplifyClientSide'
 import {Toaster} from "sonner";
 import { UserProvider } from "../components/User-Provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
-
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +35,6 @@ export default function RootLayout({
           <SidebarProvider>
             <ConfigureAmplifyClientSide />
             <Toaster position="top-right" />
-            <AppSidebar />
               {children}
           </SidebarProvider>
         </UserProvider>

@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import Ordertracking from "@/components/OrderTracking";
 
 export default function Home() {
   const { signOut, checkUser } = useAuth();
@@ -42,6 +43,7 @@ export default function Home() {
   return (
     <div className="w-full">
       <Navbar handleSignOut={handleSignOut} />
+      {/* <Ordertracking /> */}
     </div>
   );
 }
