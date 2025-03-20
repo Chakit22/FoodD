@@ -14,7 +14,7 @@ export default function Ordertracking() {
     };
 
     socket.onmessage = (event) => {
-      console.log(event);
+      // console.log(event);
       // Handle incoming messages from the WebSocket server
       setMessage(event.data);
     };
@@ -43,7 +43,6 @@ export default function Ordertracking() {
   return (
     <div>
       <h2>WebSocket Demo</h2>
-      <Button onClick={sendMessage}>Send Message to WebSocket Server</Button>
       <p>Received from WebSocket: {message}</p>
     </div>
   );
