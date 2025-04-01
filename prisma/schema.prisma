@@ -30,15 +30,6 @@ model Orders {
   user                  User        @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade) // Reverse relation on the Order model
 }
 
-model FoodItem {
-  id          String      @id @default(uuid())
-  name        String
-  description String?
-  price       Float
-  prepTime    Float
-  orderItems OrderItem[]
-}
-
 model OrderItem {
   id         String   @id @default(uuid())
   orderId    String
@@ -46,4 +37,13 @@ model OrderItem {
   quantity   Int
   order      Orders    @relation(fields: [orderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   foodItem   FoodItem @relation(fields: [foodItemId], references: [id])
+}
+
+model FoodItem {
+  id          String      @id @default(uuid())
+  name        String
+  description String?
+  price       Float
+  prepTime    Float
+  orderItems OrderItem[]
 }

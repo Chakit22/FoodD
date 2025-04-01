@@ -1,52 +1,60 @@
 "use client";
+import WebSocketManager from "@/utils/wesocketManager";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface WebsocketContextProps {
   ready: boolean;
   value: string | null;
-  send:
-    | ((
-        data: string | ArrayBufferLike | Blob | ArrayBufferView<ArrayBufferLike>
-      ) => void)
-    | undefined;
 }
 
 export const WebsocketContext = createContext<WebsocketContextProps>({
   ready: false,
   value: null,
-  send: (() => {}) | undefined;
 });
 
 export function WebsocketProvider({ children }: { children: React.ReactNode }) {
+  console.log("websocket provider rendered!");
   const [isReady, setIsReady] = useState<boolean>(false);
   const [value, setValue] = useState<string | null>(null);
 
-  const ws = useRef<WebSocket | null>(null);
-
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
+    console.log("websocket provider useeffect");
+    const ws = WebSocketManager.getInstance();
 
-    socket.onopen = () => setIsReady(true);
-    socket.onclose = () => setIsReady(false);
-    socket.onmessage = (event) => setValue(event.data);
+    /**
+     * onopen Event Handler: This function is called when the WebSocket connection is successfully established.
+     * It logs a message and sets the isReady state to true, indicating that the connection is active.​
+     */
+    ws.onopen = () => {
+      console.log("socket opened!");
+      setIsReady(true);
+    };
 
-    ws.current = socket;
+    /*
+     * onclose Event Handler: Triggered when the WebSocket connection is closed.
+     * It logs a message and updates the isReady state to false, signaling that the connection has been terminated.​
+     */
+    ws.onclose = () => {
+      console.log("socket closed!");
+      setIsReady(false);
+    };
+
+    const messageHandler = (data: string) => {
+      setValue(data);
+    };
+
+    WebSocketManager.addListener(messageHandler);
 
     return () => {
-      socket.close();
+      ws.close();
     };
   }, []);
-
-  const x = ws.current?.send.bind(ws.current);
-
-  const ret = [isReady, value, ws.current?.send.bind(ws.current)];
 
   return (
     <WebsocketContext.Provider
       value={{
         ready: isReady,
         value: value,
-        send: ws.current?.send.bind(ws.current),
       }}
     >
       {children}

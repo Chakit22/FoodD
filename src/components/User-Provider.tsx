@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@/types/User";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface ContextProps {
   user: User | null;
@@ -14,7 +14,12 @@ const UserContext = createContext<ContextProps>({
 });
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
+  console.log("user provider rendered");
   const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    console.log("user provider useeffect!");
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Ordertracking from "@/components/OrderTracking";
+import OrderStatus from "@/components/OrderTracking";
 
 export default function Home() {
   const { signOut, checkUser } = useAuth();
@@ -42,8 +43,8 @@ export default function Home() {
 
   return (
     <div className="w-full">
-      {/* <Navbar handleSignOut={handleSignOut} /> */}
-      <Ordertracking />
+      <Navbar handleSignOut={handleSignOut} />
+      <OrderStatus orderId="1f8557df-a467-49f2-a230-4ad06d7c4c3c" />
     </div>
   );
 }

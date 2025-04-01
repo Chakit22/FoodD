@@ -145,7 +145,7 @@ export default function SignupForm() {
             <Label htmlFor="password" className="text-bold">
               Password
             </Label>
-            <div className="flex justify-between gap-2 items-center">
+            <div className="flex justify-between gap-2 items-center relative">
               <Input
                 id="password"
                 type={isPasswordVisible ? "password" : "text"}
@@ -164,7 +164,11 @@ export default function SignupForm() {
                 })}
               />
               <div onClick={() => setIsPasswordVisible(!isPasswordVisible)}>
-                {isPasswordVisible ? <FaEye /> : <FaEyeSlash />}
+                {isPasswordVisible ? (
+                  <FaEye className="absolute top-1/2 transform -translate-y-1/2 right-3" />
+                ) : (
+                  <FaEyeSlash className="absolute top-1/2 transform -translate-y-1/2 right-3" />
+                )}
               </div>
             </div>
             {errors.password && (

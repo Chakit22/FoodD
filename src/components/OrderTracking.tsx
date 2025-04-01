@@ -1,49 +1,17 @@
-"use client";
-
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 
-export default function Ordertracking() {
-  const [message, setMessage] = useState<string>("");
-  const [ws, setWs] = useState<WebSocket | null>(null);
+export default function OrderStatus({ orderId }: { orderId: string }) {
+  const [status, setStatus] = useState<string>("Pending");
 
   useEffect(() => {
-    const socket = new WebSocket("ws://localhost:8080");
-    socket.onopen = () => {
-      console.log("Connected to WebSocket server!");
-    };
+    const interval = setInterval(async () => {
+      const res = await fetch(`/api/order-status?orderId=${orderId}`);
+      const data = await res.json();
+      setStatus(data.status);
+    }, 5000); // Poll every 5 seconds
 
-    socket.onmessage = (event) => {
-      // console.log(event);
-      // Handle incoming messages from the WebSocket server
-      setMessage(event.data);
-    };
+    return () => clearInterval(interval);
+  }, [orderId]);
 
-    socket.onclose = () => {
-      console.log("Disconnected from WebSocket server");
-    };
-
-    setWs(socket);
-
-    return () => {
-      // Clean up the WebSocket connection when the component unmounts
-      if (ws) {
-        console.log("Hey there");
-        ws.close();
-      }
-    };
-  }, []);
-
-  const sendMessage = () => {
-    if (ws) {
-      ws.send("Hello !");
-    }
-  };
-
-  return (
-    <div>
-      <h2>WebSocket Demo</h2>
-      <p>Received from WebSocket: {message}</p>
-    </div>
-  );
+  return <h2>Order Status: {status}</h2>;
 }

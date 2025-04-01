@@ -9,18 +9,23 @@ const prisma = new PrismaClient();
 // API to create an order
 export async function POST(req: Request) {
   try {
-    const { userId, foodItem, price } = await req.json();
+    const { userId, price, status } = await req.json();
 
-    if (!userId || !foodItem || !price) {
+    if (!userId || !status || !price) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    const order = await prisma.order.create({
-      data: { userId, foodItem, price, status: "Ordered" },
+    const order = await prisma.orders.create({
+      data: {
+        userId,
+        price,
+        status,
+      },
     });
+
     return NextResponse.json({ data: order }, { status: 201 });
   } catch (error) {
     console.error("Error creating order", error);
@@ -39,9 +44,7 @@ export async function POST(req: Request) {
 // API to get all the orders (of all the users) (For Admin)
 export async function GET() {
   try {
-    const { signInDetails } = await getCurrentUser();
-    console.log(signInDetails);
-    const orders: Order[] = await prisma.order.findMany();
+    const orders = await prisma.orders.findMany();
     console.log("orders : ");
     console.log(orders);
     return NextResponse.json({ data: orders }, { status: 200 });

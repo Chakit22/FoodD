@@ -11,7 +11,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const order: Order = await prisma.order.findUniqueOrThrow({
+    const order = await prisma.orders.findUniqueOrThrow({
       where: {
         id: params.id,
       },
@@ -40,16 +40,20 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { userId, foodItem, price, status } = await req.json();
-    const updatedOrder: Order = await prisma.order.update({
+    const { price, status } = await req.json();
+    const updatedOrder = await prisma.orders.update({
       where: {
         id: params.id,
       },
       data: {
-        userId,
-        foodItem,
         price,
         status,
+        orderItems: {
+          create: {
+            foodItemId: "food123",
+            quantity: 2,
+          },
+        },
       },
     });
 
@@ -78,7 +82,7 @@ export async function DELETE(
 ) {
   try {
     // Also deletes the corresponding orders as well
-    const order: Order = await prisma.order.delete({
+    const order = await prisma.orders.delete({
       where: {
         id: params.id,
       },

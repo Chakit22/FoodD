@@ -40,7 +40,7 @@ export default function ConfirmSignUp() {
     try {
       await confirmSignUp(email!, data.code);
 
-      toast("User sucesfully signed Up!");
+      toast("User sucessfully signed Up!");
 
       // Navigate to signIn page
       router.replace("/auth/signin");
